@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <StartAction>Project</StartAction>
+    <StartArguments>-u=http://schema.dev.box/list.txt -p=/home/nd/repos/atlis_kafka_webapi -n=IG.kafka</StartArguments>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+</Project>

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace kafka_json_parser.templates
+namespace jsonschema_to_cs.templates
 {
     class class_template {
         public string root {get; set; }
@@ -31,7 +28,6 @@ namespace kafka_json_parser.templates
                 if (null == property_value) continue;
                 else {
                 //SET @ProdID =  @myDoc.value('(/Root/ProductDescription/@ProductID)[1]', 'int' )  
-                    string type="";
                     string path=String.Format("{0}/{1}",root,pi.Name);
                     o.AppendLine(String.Format("SET @{0}=@event.value('{2}');",pi.Name,path));
                 }

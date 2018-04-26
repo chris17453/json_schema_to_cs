@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NJsonSchema;
-using NJsonSchema.CodeGeneration;
 
-namespace kafka_json_parser.code_name_generators{
+namespace jsonschema_to_cs.code_name_generators{
     public class custom_type : ITypeNameGenerator{
         public string Generate(JsonSchema4 schema, string typeNameHint, IEnumerable<string> reservedTypeNames) {
             //http://schema.dev.box/account-management/account.v1.json
