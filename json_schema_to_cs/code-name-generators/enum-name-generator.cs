@@ -9,6 +9,9 @@ namespace jsonschema_to_cs.code_name_generators{
             name=name.Replace(")","_");
             name=name.Replace(" ","_");
             name=name.Replace("-","_");
+            if(string.IsNullOrWhiteSpace(name)) {
+                name="UNK!?";
+            }
             return name;
         }//end function
     }//end class

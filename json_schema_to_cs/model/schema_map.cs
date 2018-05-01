@@ -61,6 +61,9 @@ namespace jsonschema_to_cs.model{
                 this.code_file=String.Format(@"{0}\{1}.cs",code_dir,base_name);
                 this.web_api_file=String.Format(@"{0}\{1}Controller.cs",web_api_dir,base_name);
             }
+            if(code_namespace=="event") code_namespace="@event";
+            
+
             this.@namespace=string.Format("{0}.{1}",code_namespace,event_name);
 
         }//end constructor

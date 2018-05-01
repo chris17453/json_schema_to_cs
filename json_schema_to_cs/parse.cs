@@ -7,7 +7,7 @@ namespace jsonschema_to_cs
 {
     public class parse    {
         public static bool parseapi(model.schema_map map){
-            try{
+//            try{
 
                 //This is a pain.. but must be done.
                 System.Runtime.CompilerServices.ConfiguredTaskAwaitable<JsonSchema4> bob= JsonSchema4.FromUrlAsync(map.url).ConfigureAwait(true);
@@ -27,23 +27,14 @@ namespace jsonschema_to_cs
                 var cs_file = generator.GenerateFile();
 
                 //create directory
-
-
-
-
-
-
-
-
-
                 DirectoryInfo di = Directory.CreateDirectory(map.code_dir);
                 //write file
                 File.WriteAllText(map.code_file, cs_file);
 
-            } catch (Exception ex) {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
+            //} catch (Exception ex) {
+            //    Console.WriteLine(ex.Message);
+             //   return false;
+            //}
             return true;
         }//end function     
     }
