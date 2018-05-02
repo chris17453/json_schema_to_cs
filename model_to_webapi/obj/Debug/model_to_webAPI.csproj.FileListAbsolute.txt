@@ -1,2 +1,4 @@
 /home/nd/repos/json_schema_to_cs/model_to_webapi/obj/Debug/model_to_webAPI.csprojResolveAssemblyReference.cache
 /home/nd/repos/json_schema_to_cs/model_to_webapi/obj/Debug/model_to_webAPI.csproj.CoreCompileInputs.cache
+C:\Users\charles.watkins\Source\Repos\json_schema_to_cs\model_to_webapi\obj\Debug\model_to_webAPI.csprojResolveAssemblyReference.cache
+C:\Users\charles.watkins\Source\Repos\json_schema_to_cs\model_to_webapi\obj\Debug\model_to_webAPI.csproj.CoreCompileInputs.cache

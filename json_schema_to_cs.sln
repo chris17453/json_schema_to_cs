@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "json_schema_to_cs", "json_s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "model_to_webAPI", "model_to_webapi\model_to_webAPI.csproj", "{EF47D3A6-45A8-4344-9D68-3679300A8167}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webAPI_self_host", "webAPI_self_host\webAPI_self_host.csproj", "{E58E085F-900E-41C8-A5EA-C3BE1F62B6B8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{EF47D3A6-45A8-4344-9D68-3679300A8167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF47D3A6-45A8-4344-9D68-3679300A8167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF47D3A6-45A8-4344-9D68-3679300A8167}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E58E085F-900E-41C8-A5EA-C3BE1F62B6B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E58E085F-900E-41C8-A5EA-C3BE1F62B6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E58E085F-900E-41C8-A5EA-C3BE1F62B6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E58E085F-900E-41C8-A5EA-C3BE1F62B6B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

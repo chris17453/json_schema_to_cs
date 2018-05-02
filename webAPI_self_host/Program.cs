@@ -15,3 +15,15 @@ namespace webAPI_self_host{
         }
     }
 }
+/*
+ using System.Runtime.Serialization;
+using System.ComponentModel;
+using Newtonsoft.Json;
+ 
+namespace {{ Namespace }}
+{
+    #pragma warning disable // Disable all warnings
+
+    {{ TypesCode | tab }}
+}
+     */

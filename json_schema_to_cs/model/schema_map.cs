@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace jsonschema_to_cs.model{
     public class schema_map {
-        public string url           { get; set; }
-        public string base_dir      { get; set; }
-        public string base_name     { get; set; }
-        public string event_name    { get; set; }
-        public string code_file     { get; set; }
-        public string code_dir      { get; set; }
-        public string web_api_dir   { get; set; }
-        public string web_api_file  { get; set; }
-        public string @namespace    { get; set; }
+        public string url                 { get; set; }
+        public string base_dir            { get; set; }
+        public string base_name           { get; set; }
+        public string event_name          { get; set; }
+        public string code_file           { get; set; }
+        public string code_dir            { get; set; }
+        public string compiled_json_dir  { get; set; }
+        public string compiled_json_path  { get; set; }
+        public string web_api_dir         { get; set; }
+        public string web_api_file        { get; set; }
+        public string @namespace          { get; set; }
         private static bool IsLinux {
             get {
                 int p = (int) Environment.OSVersion.Platform;
@@ -48,9 +50,11 @@ namespace jsonschema_to_cs.model{
                     }
                 }
             }
-
-            code_dir   =String.Format(@"{0}\models\{1}",base_dir,code_dir);
-            web_api_dir=String.Format(@"{0}\controllers\{1}",base_dir,code_dir);
+            string base_code_dir=code_dir;
+            code_dir            =String.Format(@"{0}\models\{1}",base_dir,base_code_dir);
+            web_api_dir         =String.Format(@"{0}\controllers\{1}",base_dir,base_code_dir);
+            compiled_json_dir  =String.Format(@"{0}\compiled\{1}",base_dir,base_code_dir);
+            compiled_json_path  =String.Format(@"{0}\{1}.json",compiled_json_dir  ,base_name);
 
             if(IsLinux) {
                 this.code_dir   =this.code_dir.Replace('\\','/');                        //because i dont live in windows
@@ -61,7 +65,7 @@ namespace jsonschema_to_cs.model{
                 this.code_file=String.Format(@"{0}\{1}.cs",code_dir,base_name);
                 this.web_api_file=String.Format(@"{0}\{1}Controller.cs",web_api_dir,base_name);
             }
-            if(code_namespace=="event") code_namespace="@event";
+            if(event_name=="event") event_name="@event";
             
 
             this.@namespace=string.Format("{0}.{1}",code_namespace,event_name);

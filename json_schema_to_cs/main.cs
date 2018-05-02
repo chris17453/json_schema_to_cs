@@ -38,7 +38,8 @@ namespace jsonschema_to_cs{
                 contents = wc.DownloadString(url);
                 //    contents="http://schema.dev.box/candidate/event/CandidateResumeReplaced.v1.json";
              //  contents="http://schema.dev.box/engagement/event/InternalEngagementInitiated.v1.json";
-                    contents="http://schema.dev.box/engagement/esf.v1.json";
+                //    contents="http://schema.dev.box/engagement/esf.v1.json";
+
             }
             } catch(Exception ex) {
                 Console.WriteLine("Downloading the url list failed. -> "+url);
