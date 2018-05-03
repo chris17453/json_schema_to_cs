@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <StartAction>Project</StartAction>
-    <StartArguments>-u=http://schema.dev.box/list.txt -p=/home/nd/repos/atlis_kafka_webapi -n=IG.kafka</StartArguments>
+    <StartArguments>-n IG.kafka -u http://schema.dev.box/list.txt -p /home/nd/repos/kafka-project</StartArguments>
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">

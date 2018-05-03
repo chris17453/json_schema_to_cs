@@ -7,7 +7,7 @@
     <ProjectGuid>{B873C306-EFE9-4BCF-90C6-C00213238F8A}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>kafka_json_parser</RootNamespace>
-    <AssemblyName>kafka_json_parser</AssemblyName>
+    <AssemblyName>json_schema_to_cs</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,28 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bogus, Version=22.0.8.0, Culture=neutral, PublicKeyToken=fa1bb3f3f218129a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bogus.22.0.8\lib\net40\Bogus.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NJsonSchema, Version=9.10.46.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.9.10.46\lib\net45\NJsonSchema.dll</HintPath>
-    </Reference>
-    <Reference Include="NJsonSchema.CodeGeneration, Version=9.10.46.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.CodeGeneration.9.10.46\lib\net451\NJsonSchema.CodeGeneration.dll</HintPath>
-    </Reference>
-    <Reference Include="NJsonSchema.CodeGeneration.CSharp, Version=9.10.46.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.CodeGeneration.CSharp.9.10.46\lib\net451\NJsonSchema.CodeGeneration.CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
@@ -64,28 +50,55 @@
     <Reference Include="DotLiquid">
       <HintPath>..\packages\DotLiquid.2.0.262\lib\net45\DotLiquid.dll</HintPath>
     </Reference>
-    <Reference Include="YamlDotNet">
-      <HintPath>..\packages\YamlDotNet.Signed.4.3.1\lib\net45\YamlDotNet.dll</HintPath>
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NJsonSchema">
+      <HintPath>..\packages\NJsonSchema.9.10.46\lib\net45\NJsonSchema.dll</HintPath>
+    </Reference>
+    <Reference Include="NJsonSchema.CodeGeneration">
+      <HintPath>..\packages\NJsonSchema.CodeGeneration.9.10.46\lib\net451\NJsonSchema.CodeGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="NJsonSchema.CodeGeneration.CSharp">
+      <HintPath>..\packages\NJsonSchema.CodeGeneration.CSharp.9.10.46\lib\net451\NJsonSchema.CodeGeneration.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="code-name-generators\enum-name-generator.cs" />
-    <Compile Include="code-name-generators\jsonschema-name-generator.cs" />
-    <Compile Include="code-name-generators\property-name-generator.cs" />
-    <Compile Include="code-name-generators\type-name-generator.cs" />
     <Compile Include="model\schema_map.cs" />
     <Compile Include="main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="model\class-template.cs" />
     <Compile Include="test.cs" />
     <Compile Include="parse.cs" />
+    <Compile Include="code-name-generators\cs\enum-name-generator.cs" />
+    <Compile Include="code-name-generators\cs\property-name-generator.cs" />
+    <Compile Include="code-name-generators\cs\type-name-generator.cs" />
+    <Compile Include="code-name-generators\jsonschema\jsonschema-name-generator.cs" />
+    <Compile Include="dll_generator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="template\Class.liquid" />
-    <None Include="template\Enum.liquid" />
-    <None Include="template\File.liquid" />
+    <None Include="template\File.liquid">
+      <IncludeInPackage>true</IncludeInPackage>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="template\Enum.liquid">
+      <IncludeInPackage>false</IncludeInPackage>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="template\Class.liquid">
+      <IncludeInPackage>true</IncludeInPackage>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="code-name-generators\cs\" />
+    <Folder Include="code-name-generators\jsonschema\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

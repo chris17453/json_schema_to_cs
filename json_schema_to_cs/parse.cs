@@ -5,20 +5,16 @@ using NJsonSchema;
 using NJsonSchema.CodeGeneration.CSharp;
 using NJsonSchema.CodeGeneration;
 using NJsonSchema.Generation;
-using kafka_json_parser.code_name_generators;
+using jsonschema_to_cs.code_name_generators;
 
 namespace jsonschema_to_cs
 {
 
 
-/*    public class js2 : JsonSchema4{
-        public override 
-    }
-    */
-    
+
     public class parse    {
         public static bool parseapi(model.schema_map map){
-//            try{
+            try{
 
                 //This is a pain.. but must be done.
                 JsonSchemaGeneratorSettings js=new JsonSchemaGeneratorSettings();
@@ -37,11 +33,11 @@ namespace jsonschema_to_cs
                 //Custom name generation
                 var settings = new CSharpGeneratorSettings();
                 settings.ClassStyle             = CSharpClassStyle.Poco;
-               // settings.PropertyNameGenerator  = new code_name_generators.custom_property();
-               // settings.TypeNameGenerator      = new code_name_generators.custom_type();
-               // settings.EnumNameGenerator      = new code_name_generators.custom_enum();
-               // settings.Namespace              = map.@namespace;
-                settings.TemplateDirectory      = @"C:\Users\charles.watkins\Source\Repos\json_schema_to_cs\json_schema_to_cs\template\";
+                settings.PropertyNameGenerator  = new code_name_generators.custom_property();
+                settings.TypeNameGenerator      = new code_name_generators.custom_type();
+                settings.EnumNameGenerator      = new code_name_generators.custom_enum();
+                settings.Namespace              = map.@namespace;
+                settings.TemplateDirectory      = @"template/";
                 
                 DirectoryInfo di = Directory.CreateDirectory(map.compiled_json_dir);
                 File.WriteAllText(map.compiled_json_path,schema_object.ToJson());
@@ -55,11 +51,13 @@ namespace jsonschema_to_cs
                 //write file
                 File.WriteAllText(map.code_file, cs_file);
 
+                assembly_generator.compile_dll(map.dll_dir,map.dll_file,cs_file,false);
+              
                 
-            //} catch (Exception ex) {
-            //    Console.WriteLine(ex.Message);
-             //   return false;
-            //}
+            } catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
             return true;
         }//end function     
     }
