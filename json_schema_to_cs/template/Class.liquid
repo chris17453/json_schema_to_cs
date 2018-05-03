@@ -9,11 +9,21 @@
 {% endfor -%}
 {% endif -%}
 [DataContract]
-{% if InheritsExceptionSchema -%}
+{% if HasInheritance == true and BaseClassName  == "@event" -%} 
+[@XmlRootAttribute]
+{%- else -%} {%- endif -%}
+{% for property in Properties -%}
+{% if  property.Name == "identifier" %}
+//Id={{_schema.Id}}
+//Id={{_Schema.Id}}
+{%- endif -%}
+{% endfor -%}
+[XmlType(Namespace = "http://{{Namespace}}.xsd")] 
+{%- if InheritsExceptionSchema -%}
 [JsonObjectAttribute]
-{% endif -%}
+{%- endif -%}
 {% template Class.Annotations %}
-{{ TypeAccessModifier }} {% if IsAbstract %}abstract {% endif %}partial class {{ClassName}} {% template Class.Inheritance %}
+{{ TypeAccessModifier }} class {{ClassName}} {% template Class.Inheritance %}
 {
 {% if RenderInpc or RenderPrism -%}
 {% for property in Properties -%}
@@ -27,40 +37,39 @@
 
 {% endif -%}
 {% for property in Properties -%}
-{%   if property.HasDescription -%}
+{% if property.HasDescription -%}
     /// <summary>{{ property.Description | csharpdocs }}</summary>
-{%   endif -%}
-
-{% for p in property %}
-{{ property }}
-  {{ p }}
-{% endfor %}
-
-
+{% endif -%}
+{% if HasInheritance == false and property.PropertyName == "payload" -%}
+{%- else -%}	
     [JsonProperty("{{ property.Name }}", Required = {{ property.JsonPropertyRequiredCode }}{% if property.IsStringEnumArray %}, ItemConverterType = typeof(Converters.StringEnumConverter){% endif %})]
+{%- endif -%}
 	[DataMember(Name = "{{ property.Name }}"{% if property.JsonPropertyRequiredCode == 'Required.Always' %}, IsRequired = true{% endif %})]
-{%   if property.RenderRequiredAttribute -%}
+{% if property.Type == "int"  or  property.Type == "double" or property.Type == "decimal" or  property.Type == "DateTime" or property.Type == "bool" -%} 
+    [XmlAttribute]
+{% else -%}
+    [XmlElement]
+{% endif -%}
+{% if property.RenderRequiredAttribute -%}
     [Required{% if property.AllowEmptyStrings %}(AllowEmptyStrings = true){% endif %}]
-{%   endif -%}
-{%   if property.RenderRangeAttribute -%}
+{% endif -%}
+{% if property.RenderRangeAttribute -%}
     [Range({{ property.RangeMinimumValue }}, {{ property.RangeMaximumValue }})]
-{%   endif -%}
-{%   if property.RenderStringLengthAttribute -%}
+{% endif -%}
+{% if property.RenderStringLengthAttribute -%}
     [StringLength({{ property.StringLengthMaximumValue }}{% if property.StringLengthMinimumValue > 0 %}, MinimumLength = {{ property.StringLengthMinimumValue }}{% endif %})]
-{%   endif -%}
-
-
-{%   if property.RenderRegularExpressionAttribute -%}
+{% endif -%}
+{% if property.RenderRegularExpressionAttribute -%}
     [RegularExpression(@"{{ property.RegularExpressionValue }}")]
-{%   endif -%}
-{%   if property.IsStringEnum -%}
+{% endif -%}
+{% if property.IsStringEnum -%}
     [JsonConverter(typeof(StringEnumConverter))]
-{%   endif -%}
-{%   if property.IsDate and UseDateFormatConverter -%}
+{% endif -%}
+{% if property.IsDate and UseDateFormatConverter -%}
     [JsonConverter(typeof(DateFormatConverter))]
-{%   endif -%}
-    {% template Class.Property.Annotations %}
-    public {{ property.Type }} {{ property.PropertyName }}{% if RenderInpc == false and RenderPrism == false %} { get; {% if property.HasSetter and RenderRecord == false %}set; {% endif %}}{% if property.HasDefaultValue %} = {{ property.DefaultValue }};{% endif %}
+{%- endif -%}
+    {% template Class.Property.Annotations -%}
+    public {% if HasInheritance == true  and property.PropertyName == "payload" -%}override {% endif -%}{% if HasInheritance == false and property.PropertyName == "payload" -%}virtual {% endif -%}{% if HasInheritance == false and property.PropertyName == "payload" -%}payload {% else -%}{{ property.Type }} {% endif -%} {{ property.PropertyName }}{% if RenderInpc == false and RenderPrism == false %} { get; {% if property.HasSetter and RenderRecord == false %}set; {% endif %}} {% comment%}{% if property.HasDefaultValue %} = {{ property.DefaultValue }};{% endif %}{% endcomment %}
 {% else %}
     {
         get { return {{ property.FieldName }}; }

@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -51,9 +54,6 @@
       <HintPath>..\packages\DotLiquid.2.0.262\lib\net45\DotLiquid.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="NJsonSchema">
       <HintPath>..\packages\NJsonSchema.9.10.46\lib\net45\NJsonSchema.dll</HintPath>
     </Reference>
@@ -66,8 +66,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="code-name-generators\Template Class.cs" />
     <Compile Include="model\schema_map.cs" />
     <Compile Include="main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,26 +81,24 @@
     <Compile Include="code-name-generators\cs\type-name-generator.cs" />
     <Compile Include="code-name-generators\jsonschema\jsonschema-name-generator.cs" />
     <Compile Include="dll_generator.cs" />
+    <Compile Include="XML\helper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="template\File.liquid">
       <IncludeInPackage>true</IncludeInPackage>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="template\Enum.liquid">
       <IncludeInPackage>false</IncludeInPackage>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="template\Class.liquid">
       <IncludeInPackage>true</IncludeInPackage>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="code-name-generators\cs\" />
-    <Folder Include="code-name-generators\jsonschema\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

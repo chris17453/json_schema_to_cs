@@ -1,4 +1,4 @@
-﻿using System;
+﻿        using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.IO;
@@ -12,12 +12,14 @@ namespace jsonschema_to_cs
 
 
 
-        public static void write_source(string file_path,string source){ 
-            string filename=file_path+".cs";
+        public static void write_file(string file_path,string text){ 
+            string filename =file_path;
+            string path     =Path.GetDirectoryName(filename);
+            Directory.CreateDirectory(path);
             Console.WriteLine("Source file Written : "+filename);
             try{
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(filename)) {
-                    file.Write(source);
+                    file.Write(text);
                 }
             }catch(Exception ex) {
                 Console.WriteLine("Error Writing source file :"+ex.Message);
@@ -40,6 +42,8 @@ namespace jsonschema_to_cs
             parameters.ReferencedAssemblies.Add("System.Data.DataSetExtensions.dll");
             parameters.ReferencedAssemblies.Add("System.ComponentModel.DataAnnotations.dll");
             parameters.ReferencedAssemblies.Add("System.Runtime.Serialization.dll");
+            parameters.ReferencedAssemblies.Add("System.Xml.Serialization.dll");
+            parameters.ReferencedAssemblies.Add("System.Xml.dll");
             parameters.ReferencedAssemblies.Add("Newtonsoft.Json.dll");
             parameters.ReferencedAssemblies.Add("NJsonSchema.dll");
             parameters.ReferencedAssemblies.Add("System.dll");
@@ -57,7 +61,7 @@ namespace jsonschema_to_cs
             }
 
             if(save_source) {
-                write_source(filename,code);
+                write_file(filename+".cs",code);
             }
 
             CompilerResults cr = codeProvider.CompileAssemblyFromSource(parameters, code);

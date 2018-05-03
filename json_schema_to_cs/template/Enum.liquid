@@ -2,6 +2,7 @@
 /// <summary>{{ Description | csharpdocs }}</summary>
 {% endif -%}
 [DataContract(Name = "{{ Name }}")]
+[XmlType(Namespace = "http://{{Namespace}}.xsd")] 
 {{ TypeAccessModifier }} enum {{ Name }}
 {
 {% for enum in Enums -%}

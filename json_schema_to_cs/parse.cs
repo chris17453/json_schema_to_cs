@@ -21,15 +21,11 @@ namespace jsonschema_to_cs
                 js.TypeNameGenerator=new jsonnamer();
                 Func<JsonSchema4, JsonReferenceResolver> referenceResolverFactory =
                 schema => new JsonReferenceResolver(new JsonSchemaResolver(schema, js));
-            
 
                 System.Runtime.CompilerServices.ConfiguredTaskAwaitable<JsonSchema4> bob= JsonSchema4.FromUrlAsync(map.url,referenceResolverFactory).ConfigureAwait(true);
                 System.Runtime.CompilerServices.ConfiguredTaskAwaitable<JsonSchema4>.ConfiguredTaskAwaiter awaiter=bob.GetAwaiter();
                 JsonSchema4 schema_object=awaiter.GetResult();
-                
-                //Console.Write(schema_object.Xml.ToString());
-            
-                
+
                 //Custom name generation
                 var settings = new CSharpGeneratorSettings();
                 settings.ClassStyle             = CSharpClassStyle.Poco;
@@ -38,12 +34,12 @@ namespace jsonschema_to_cs
                 settings.EnumNameGenerator      = new code_name_generators.custom_enum();
                 settings.Namespace              = map.@namespace;
                 settings.TemplateDirectory      = @"template/";
+                settings.SchemaType             = SchemaType.JsonSchema;
                 
                 DirectoryInfo di = Directory.CreateDirectory(map.compiled_json_dir);
-                File.WriteAllText(map.compiled_json_path,schema_object.ToJson());
+           var gener      File.WriteAllText(map.compiled_json_path,schema_object.ToJson());
                 //generate c# class
-                var generator = new CSharpGenerator(schema_object,settings);             
-            
+               ator = new CSharpGenerator(schema_object,settings);             
                 var cs_file = generator.GenerateFile();
 
                 //create directory
@@ -52,8 +48,7 @@ namespace jsonschema_to_cs
                 File.WriteAllText(map.code_file, cs_file);
 
                 assembly_generator.compile_dll(map.dll_dir,map.dll_file,cs_file,false);
-              
-                
+                XML.helper.GetSchema(map.dll_file,map.xsd_file);
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
                 return false;

@@ -6,6 +6,6 @@
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-n IG.kafka -u http://schema.dev.box/list.txt -p C:\repos\kafka-project\</StartArguments>
+    <StartArguments>-n IG.kafka -u http://schema.dev.box/list.txt -p C:\repos\kafka-project</StartArguments>
   </PropertyGroup>
 </Project>
