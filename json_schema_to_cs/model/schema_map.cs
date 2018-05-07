@@ -86,8 +86,16 @@ namespace jsonschema_to_cs.model{
             this.dll_file               =String.Format(@"{0}{1}{2}.{3}.dll"           ,dll_dir           ,seperator ,dll_base, base_name);
             if(event_name=="event") event_name="@event";
             
-
-            this.@namespace=string.Format("{0}.{1}",code_namespace,event_name);
+            string[] ns2=dll_base.Replace("-","_").Split('.');
+            string ns3="";
+            if(ns2.Length>=3) {
+                for(int i=3;i<ns2.Length;i++) {
+                    if(ns2[i]=="event") continue;
+                    if(ns3!="") ns3+="." ;
+                    ns3+=ns2[i];
+                }
+            } 
+            this.@namespace=string.Format("{0}.{1}.{2}",code_namespace,ns3,event_name);
 
         }//end constructor
     }//end class

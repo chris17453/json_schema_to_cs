@@ -37,18 +37,17 @@ namespace jsonschema_to_cs
                 settings.SchemaType             = SchemaType.JsonSchema;
                 
                 DirectoryInfo di = Directory.CreateDirectory(map.compiled_json_dir);
-           var gener      File.WriteAllText(map.compiled_json_path,schema_object.ToJson());
+                File.WriteAllText(map.compiled_json_path,schema_object.ToJson());
                 //generate c# class
-               ator = new CSharpGenerator(schema_object,settings);             
+                var generator = new CSharpGenerator(schema_object,settings);             
                 var cs_file = generator.GenerateFile();
 
                 //create directory
                 di = Directory.CreateDirectory(map.code_dir);
                 //write file
                 File.WriteAllText(map.code_file, cs_file);
-
                 assembly_generator.compile_dll(map.dll_dir,map.dll_file,cs_file,false);
-                XML.helper.GetSchema(map.dll_file,map.xsd_file);
+
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
                 return false;

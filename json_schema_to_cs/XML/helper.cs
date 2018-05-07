@@ -9,8 +9,14 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace jsonschema_to_cs.XML{
+ 
     class helper    {
-  
+        static void HandleValidationEventHandler(object sender, ValidationEventArgs e)
+        {
+
+
+
+        }  
         public static bool GetSchema(string source_library,string dest_xsd)
         {
             if(!File.Exists(source_library)) {
@@ -19,21 +25,35 @@ namespace jsonschema_to_cs.XML{
             }
             var DLL = Assembly.LoadFile(source_library);
             try{
-             XmlSchemas schemas = new XmlSchemas();
+            int index=0;
+
+            XmlSchemas schemas = new XmlSchemas();
             foreach(Type type in DLL.GetExportedTypes()){
-                XmlSchema schema = new XmlSchema();
-                var c = Activator.CreateInstance(type.UnderlyingSystemType);
-                XmlAttributeOverrides   xao = new XmlAttributeOverrides();
-                AttachXmlAttributes(xao, type.UnderlyingSystemType);
-                XmlReflectionImporter   importer = new XmlReflectionImporter(xao);
-                XmlSchemaExporter       exporter = new XmlSchemaExporter(schemas);
-                XmlTypeMapping          map = importer.ImportTypeMapping(type.UnderlyingSystemType);
-               exporter.ExportTypeMapping(map);
-                schemas.Add(schema);
-             }//end loop
+                    if(!type.BaseType.Name.Contains("event")) continue;
+                    var c = Activator.CreateInstance(type.UnderlyingSystemType);
+                    XmlAttributeOverrides   xao = new XmlAttributeOverrides();
+                    AttachXmlAttributes(xao, type.UnderlyingSystemType);
+                    XmlReflectionImporter   importer = new XmlReflectionImporter(xao);
+                    XmlSchemaExporter       exporter = new XmlSchemaExporter(schemas);
+                    XmlTypeMapping          map = importer.ImportTypeMapping(type.UnderlyingSystemType,type.Namespace);
+                    exporter.ExportTypeMapping(map);
+//                }
+                index++;
+                    break;
+
+            }//end loop
+
             string o="";
             using (MemoryStream ms = new MemoryStream()){
+                    XmlSchemaSet ss=new XmlSchemaSet();
+                                    
                 foreach(XmlSchema s in  schemas) {
+                        ss.Add(s);
+                }
+
+                ss.Compile();
+                var  x=ss.Schemas();
+                foreach(XmlSchema s in  x) {
                     s.Write(ms);
                     ms.Position = 0;
                     o+=new StreamReader(ms).ReadToEnd();
@@ -123,5 +143,47 @@ namespace jsonschema_to_cs.XML{
             return list;
         }
 
+
+        public static XmlSchema GetXSDFileAsXMLSchema(string path){
+            try{
+                FileStream fs = new FileStream(path, FileMode.Open);
+            if(fs.Length==0) return null;
+            XmlSchema schema = XmlSchema.Read(fs, new ValidationEventHandler(ValidationCallBack));
+            return schema;
+            } catch (Exception ex) {
+                Console.WriteLine(ex);
+            }
+            return null;
+        }
+
+        private static void ValidationCallBack(object sender, ValidationEventArgs args){
+            return; 
+        }  
+
+        public static void combine_xsd(string[] list,string path,string ns) {
+            XmlSchemaSet schemaSet = new XmlSchemaSet();
+            int i=0;
+            foreach (string xsd in list) {
+                //if(i>) break;
+                i++;
+                jsonschema_to_cs.model.schema_map map=new jsonschema_to_cs.model.schema_map(xsd,path,ns);
+                XmlSchema schema=GetXSDFileAsXMLSchema(map.xsd_file);
+                if(null==schema) continue;
+                schemaSet.Add(schema);
+            }
+
+            schemaSet.Compile();
+            var  x=schemaSet.Schemas();
+            string o="";
+            using (MemoryStream ms = new MemoryStream()){
+                foreach(XmlSchema s in  x) {
+                    s.Write(ms);
+                }
+                ms.Position = 0;
+                o=new StreamReader(ms).ReadToEnd();
+                string  dest_xsd=path+"/combined.xsd";
+                assembly_generator.write_file(dest_xsd,o);
+            }
+        }
     }//end class
 }//end namespace

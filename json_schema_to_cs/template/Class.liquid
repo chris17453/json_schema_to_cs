@@ -18,7 +18,7 @@
 //Id={{_Schema.Id}}
 {%- endif -%}
 {% endfor -%}
-[XmlType(Namespace = "http://{{Namespace}}.xsd")] 
+[XmlType(Namespace = "{{Namespace}}")] 
 {%- if InheritsExceptionSchema -%}
 [JsonObjectAttribute]
 {%- endif -%}
@@ -41,6 +41,7 @@
     /// <summary>{{ property.Description | csharpdocs }}</summary>
 {% endif -%}
 {% if HasInheritance == false and property.PropertyName == "payload" -%}
+    [XmlIgnoreAttribute]
 {%- else -%}	
     [JsonProperty("{{ property.Name }}", Required = {{ property.JsonPropertyRequiredCode }}{% if property.IsStringEnumArray %}, ItemConverterType = typeof(Converters.StringEnumConverter){% endif %})]
 {%- endif -%}
@@ -69,7 +70,10 @@
     [JsonConverter(typeof(DateFormatConverter))]
 {%- endif -%}
     {% template Class.Property.Annotations -%}
-    public {% if HasInheritance == true  and property.PropertyName == "payload" -%}override {% endif -%}{% if HasInheritance == false and property.PropertyName == "payload" -%}virtual {% endif -%}{% if HasInheritance == false and property.PropertyName == "payload" -%}payload {% else -%}{{ property.Type }} {% endif -%} {{ property.PropertyName }}{% if RenderInpc == false and RenderPrism == false %} { get; {% if property.HasSetter and RenderRecord == false %}set; {% endif %}} {% comment%}{% if property.HasDefaultValue %} = {{ property.DefaultValue }};{% endif %}{% endcomment %}
+    public {% if HasInheritance == true  and property.PropertyName == "payload" -%}  {% endif -%}{% if HasInheritance == false and property.PropertyName == "payload" -%}virtual {% endif -%}
+    {% if HasInheritance == false and property.PropertyName == "payload" -%}payload {% else -%}{{ property.Type }} {% endif -%} 
+    {% if HasInheritance == false and property.PropertyName == "payload" -%}payload2{%- else -%}{{ property.PropertyName }}{% endif -%} 
+    {% if RenderInpc == false and RenderPrism == false %} { get; {% if property.HasSetter and RenderRecord == false %}set; {% endif %}} {% comment%}{% if property.HasDefaultValue %} = {{ property.DefaultValue }};{% endif %}{% endcomment %}
 {% else %}
     {
         get { return {{ property.FieldName }}; }

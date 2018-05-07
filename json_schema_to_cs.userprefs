@@ -1,35 +1,12 @@
 ﻿<Properties StartupConfiguration="{B873C306-EFE9-4BCF-90C6-C00213238F8A}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="json_schema_to_cs/model/schema_map.cs">
     <Files>
-      <File FileName="json_schema_to_cs/dll_generator.cs" Line="94" Column="1" />
-      <File FileName="json_schema_to_cs/template/Class.liquid" Line="57" Column="27" />
-      <File FileName="json_schema_to_cs/template/File.liquid" Line="3" Column="55" />
-      <File FileName="json_schema_to_cs/template/Enum.liquid" Line="1" Column="1" />
-      <File FileName="json_schema_to_cs/model/schema_map.cs" Line="3404" Column="1" />
-      <File FileName="json_schema_to_cs/parse.cs" Line="42" Column="45" />
-      <File FileName="json_schema_to_cs/code-name-generators/cs/enum-name-generator.cs" Line="14" Column="33" />
-      <File FileName="json_schema_to_cs/code-name-generators/cs/property-name-generator.cs" Line="10" Column="10" />
-      <File FileName="json_schema_to_cs/code-name-generators/cs/type-name-generator.cs" Line="24" Column="1" />
-      <File FileName="json_schema_to_cs/code-name-generators/jsonschema/jsonschema-name-generator.cs" Line="23" Column="1" />
+      <File FileName="json_schema_to_cs/XML/helper.cs" Line="178" Column="58" />
+      <File FileName="json_schema_to_cs/template/Class.liquid" Line="32" Column="1" />
+      <File FileName="json_schema_to_cs/parse.cs" Line="49" Column="72" />
+      <File FileName="json_schema_to_cs/main.cs" Line="51" Column="3" />
+      <File FileName="json_schema_to_cs/model/schema_map.cs" Line="89" Column="63" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="json_schema_to_cs" expanded="True">
-            <Node name="json_schema_to_cs" expanded="True">
-              <Node name="code-name-generators" expanded="True">
-                <Node name="cs" expanded="True" />
-                <Node name="jsonschema" expanded="True" />
-              </Node>
-              <Node name="model" expanded="True">
-                <Node name="schema_map.cs" selected="True" />
-              </Node>
-              <Node name="template" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

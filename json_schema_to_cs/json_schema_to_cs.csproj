@@ -73,7 +73,6 @@
     <Compile Include="model\schema_map.cs" />
     <Compile Include="main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="model\class-template.cs" />
     <Compile Include="test.cs" />
     <Compile Include="parse.cs" />
     <Compile Include="code-name-generators\cs\enum-name-generator.cs" />
@@ -96,6 +95,9 @@
     </None>
     <None Include="template\Class.liquid">
       <IncludeInPackage>true</IncludeInPackage>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="template\Class.Body.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

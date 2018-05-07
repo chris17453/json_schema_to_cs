@@ -20,8 +20,13 @@ namespace jsonschema_to_cs.code_name_generators
             }
    
             try{
-            if(!String.IsNullOrWhiteSpace(schema.DocumentPath)) {
-                string[] tokens=schema.DocumentPath.Split('/');
+            if(!String.IsNullOrWhiteSpace(schema.Id)) {
+                    string typename=schema.Id;
+                    typename=typename.Replace(".json","");
+                    typename=typename.Replace("http://","");
+                    typename=typename.Replace("https://","");
+                    typename=typename.Replace("/",".");
+                /*string[] tokens=schema.DocumentPath.Split('/');
                 if(null==tokens) {
                     Console.WriteLine("Token Err");
                 }
@@ -29,8 +34,9 @@ namespace jsonschema_to_cs.code_name_generators
                 string[] tokens2=last.Split('.');
                  if(null==tokens2) {
                     Console.WriteLine("Token Err");
-                }
-                string name=tokens2.First();
+                }*/
+
+               string name=typename;
                     if(name=="event") return "@event";
                     if(name=="class") return "@class";
 

@@ -48,18 +48,24 @@ namespace jsonschema_to_cs{
             }
 
             string [] url_list=contents.Split('\n')  ;
-            
-            foreach(string target_url in url_list)   {
-                if(string.IsNullOrWhiteSpace(target_url)) continue;                    //skip empty lines
-                model.schema_map map=new model.schema_map(target_url,path,@namespace);
-                try{
-                    if(!parse.parseapi(map)) Console.WriteLine("FAILED: "+target_url);
-                } catch(Exception ex) {
-                    Console.WriteLine("Processing failed: "+target_url);
-                    Console.WriteLine("Message: "+ex.Message);
+//            if(1==2)
+            {
+                foreach(string target_url in url_list)   {
+                    if(string.IsNullOrWhiteSpace(target_url)) continue;                    //skip empty lines
+                    model.schema_map map=new model.schema_map(target_url,path,@namespace);
+                    try{
+                        if(!parse.parseapi(map)) Console.WriteLine("FAILED: "+target_url);
+                        XML.helper.GetSchema(map.dll_file,map.xsd_file);
+
+                    } catch(Exception ex) {
+                        Console.WriteLine("Processing failed: "+target_url);
+                        Console.WriteLine("Message: "+ex.Message);
+                    }
                 }
             }
-            
+
+
+            XML.helper.combine_xsd(url_list,path,@namespace);
             
                 Console.Write("Done.");
         }//end main
