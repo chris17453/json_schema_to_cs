@@ -7,28 +7,29 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 namespace jsonschema_to_cs
 {
+    
     public static class assembly_generator
     {
-
+        public static int debug_level = 1;
 
 
         public static void write_file(string file_path,string text){ 
             string filename =file_path;
             string path     =Path.GetDirectoryName(filename);
             Directory.CreateDirectory(path);
-            Console.WriteLine("Source file Written : "+filename);
+            if (debug_level > 2)Console.WriteLine("Source file Written : "+filename);
             try{
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(filename)) {
                     file.Write(text);
                 }
             }catch(Exception ex) {
-                Console.WriteLine("Error Writing source file :"+ex.Message);
+                if(debug_level>2) Console.WriteLine("Error Writing source file :"+ex.Message);
 
             }
         }//end write_source
 
         public static bool compile_dll (string path,string filename,string code,bool save_source){
-            Console.WriteLine("Compiling");
+            if(debug_level>2)Console.WriteLine("Compiling");
             CSharpCodeProvider codeProvider = new CSharpCodeProvider();
             System.CodeDom.Compiler.CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateExecutable = false;
@@ -52,11 +53,11 @@ namespace jsonschema_to_cs
 
 
             if(String.IsNullOrWhiteSpace(code)) {
-                Console.WriteLine("No code.");
+                if (debug_level > 2)Console.WriteLine("No code.");
                 return false;
             }
             if(String.IsNullOrWhiteSpace(filename)) {
-                Console.WriteLine("No DLL name.");
+                if (debug_level > 2)Console.WriteLine("No DLL name.");
                 return false;
             }
 
@@ -73,24 +74,24 @@ namespace jsonschema_to_cs
                 return false;
             } else {
                 // Display information about the compiler's exit code and the generated assembly.
-                Console.WriteLine( "Compiler returned with result code: " + cr.NativeCompilerReturnValue.ToString() );
-                Console.WriteLine( "Generated assembly name: " + cr.CompiledAssembly.FullName );
+                if (debug_level > 2)Console.WriteLine( "Compiler returned with result code: " + cr.NativeCompilerReturnValue.ToString() );
+                if (debug_level > 2)Console.WriteLine( "Generated assembly name: " + cr.CompiledAssembly.FullName );
                 if( cr.PathToAssembly == null )
-                    Console.WriteLine( "The assembly has been generated in memory." );
+                if (debug_level > 2)Console.WriteLine( "The assembly has been generated in memory." );
                 else
-                    Console.WriteLine( "Path to assembly: " + cr.PathToAssembly );
+                    if (debug_level > 2)Console.WriteLine( "Path to assembly: " + cr.PathToAssembly );
 
                 // Display temporary files information.
-                if( !cr.TempFiles.KeepFiles ) Console.WriteLine( "Temporary build files were deleted." );
+                if( !cr.TempFiles.KeepFiles ) if (debug_level > 2)Console.WriteLine( "Temporary build files were deleted." );
                 else {
-                    Console.WriteLine( "Temporary build files were not deleted." );
+                    if (debug_level > 2)Console.WriteLine( "Temporary build files were not deleted." );
                     // Display a list of the temporary build files
                     IEnumerator enu = cr.TempFiles.GetEnumerator();                                        
                     for( int i=0; enu.MoveNext(); i++ )                                          
-                        Console.WriteLine( "TempFile " + i.ToString() + ": " + (string)enu.Current );                  
+                        if (debug_level > 2)Console.WriteLine( "TempFile " + i.ToString() + ": " + (string)enu.Current );                  
                 }
             }        
-            Console.WriteLine("Compiling Finished");
+            if (debug_level > 2)Console.WriteLine("Compiling Finished");
             return true;
         }        
     }

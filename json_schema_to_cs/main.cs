@@ -10,8 +10,7 @@ namespace jsonschema_to_cs{
             string @namespace=String.Empty;
 
             bool show_help = false;
-            List<string> names = new List<string> ();
-
+        
             // -n IG.kafka -u http://schema.dev.box/list.txt -p C:\repos\kafka-project\
             var p = new OptionSet () {
                 { "p|path="     , "the {PATH} of c# project"  , v => { path=v; }},
@@ -36,9 +35,11 @@ namespace jsonschema_to_cs{
             try{
             using (var wc = new System.Net.WebClient()){
                 contents = wc.DownloadString(url);
-                //    contents="http://schema.dev.box/candidate/event/CandidateResumeReplaced.v1.json";
-             //  contents="http://schema.dev.box/engagement/event/InternalEngagementInitiated.v1.json";
-                //    contents="http://schema.dev.box/engagement/esf.v1.json";
+                //  contents="http://schema.dev.box/candidate/event/CandidateResumeReplaced.v1.json";
+                //  contents="http://schema.dev.box/engagement/event/InternalEngagementInitiated.v1.json"
+                //  contents="http://schema.dev.box/engagement/event/ExternalEngagementCreated.v1.json";
+                //  contents="http://schema.dev.box/engagement/externalEngagement.v1.json";
+                //  contents="http://schema.dev.box/engagement/esf.v1.json";
 
             }
             } catch(Exception ex) {
