@@ -78,36 +78,106 @@ namespace java2cs
         public static string complete_modifiers(string data) {
             int start_position=0;
             int end_position=0;
-            int position=0;
             char[] whitespace={' ','\r','\n','\t'};
-            while(position<data.Length){
-                start_position=data.IndexOf("@",position);
-                if(start_position<0) break;
-                bool not_modifier=false;
-                for(int a=start_position;a>=0;a--) {
+            while(start_position<data.Length){
+                start_position=data.IndexOf("@",start_position);
+                if(start_position<0)  {
+                    return data;
+                }
+                bool modifier=true;
+                for(int a=start_position-1;a>=0;a--) {
                     if(!whitespace.Contains(data[a])) {
-                        position=a;
-                        not_modifier=true;
+                        modifier=false;
                         break;
                     }
                     if(data[a]=='\r' || data[a]=='\n') {
-                        position=a;
                         break;
                     }
                 }
-                if(!not_modifier) continue;
+
+                if(!modifier) {
+                    start_position++;
+                    continue;
+                }
 
                 end_position=data.IndexOf("\n",start_position);
                 data=data.Remove(start_position,1);
                 data=data.Insert(start_position,"[");
                 data=data.Insert(end_position,"]");
+                start_position=end_position+1;
             }
-            
             return data;
         }
-        
+
+
+        public static string nottnull(string data){
+            int start_position=0;
+            char[] whitespace={' ','\r','\n','\t'};
+            while(start_position<data.Length){
+                start_position=data.IndexOf("@NotNull",start_position);
+                if(start_position<0)  {
+                    return data;
+                }
+                for(int a=start_position-1;a>=0;a--) {
+                    if(data[a]=='\r' || data[a]=='\n') {
+                        data=data.Remove(start_position,9);    
+                        data=data.Insert(a,"\n\t[XmlElementAttribute(IsNullable=false)]");
+                        break;
+                    }
+                }
+                start_position++;
+            }
+            return data;
+        }
+
+        public static string size(string data) {
+            int start_position=0;
+            char[] whitespace={' ','\r','\n','\t'};
+            while(start_position<data.Length){
+                int[] block=get_block(data,"@Size",")",start_position);
+                if(block==null) return data;
+
+                for(int a=block[0]-1;a>=0;a--) {
+                    if(data[a]=='\r' || data[a]=='\n') {
+                        string attrib=data.Substring(block[0],block[1]);
+                        attrib=attrib.Replace("@Size","").Replace("(","").Replace(")","");
+                        data=data.Remove(block[0],block[1]+1);
+                        //data=data.Insert(a,"\n\t[JsonAttribute("+attrib+")]");
+                        break;
+                                    
+                    }
+                }
+
+                start_position++;
+            }
+            return data;
+        }
+
+        public static string _override(string data) {
+            int start_position=0;
+            char[] whitespace={' ','\r','\n','\t'};
+            while(start_position<data.Length){
+                int[] block=get_block(data,"[Override","}",start_position);
+                if(block==null) return data;
+
+                for(int a=block[0]-1;a>=0;a--) {
+                    if(data[a]=='\r' || data[a]=='\n') {
+                        //string attrib=data.Substring(block[0],block[1]);
+                        //attrib=attrib.Replace("@Size","").Replace("(","").Replace(")","");
+                        data=data.Remove(block[0],block[1]+1);
+                        //data=data.Insert(a,"\n\t[JsonAttribute("+attrib+")]");
+                        break;
+
+                    }
+                }
+
+                start_position++;
+            }
+            return data;
+        }
+
         public static void gen_cs(string data, string output_file){
-            int len=data.Length;
+            data=data.Replace("\r","");
             int[] block;
             data=delete_all(data,"import",";");
             block=get_block(data,"package",";");
@@ -116,18 +186,30 @@ namespace java2cs
             data=data.Insert(block[1]-1,"{\n"+
                              "using System.Xml;\n"+
                              "using System.Xml.Serialization;\n"+
-                             "using Java.Builders;\n"
+                             "using System.Runtime.Serialization;\n"+
+                             "using System.Collections.Generic;\n"+
+                             "using JavaDeps;\n"
                              );
             data=data+"}//end namespace";
             data=data.Replace("package","namespace");
             data=complete_modifiers(data);
+            data=nottnull(data);
+            data=size(data);
+            data=_override(data);
+            data=data.Replace("JsonInclude.Include.NON_EMPTY","\"NON_EMPTY\"");
             data=data.Replace("final class","sealed class");        //correct class
             data=data.Replace("final"      ,"readonly");        //correct properties/fields
             data=data.Replace("String"     ,"string");              //
             data=data.Replace("boolean"    ,"bool");              //
+            data=data.Replace("boolean"    ,"bool");              //
             data=data.Replace("tostring"   ,"ToString");              //
-            data=data.Replace("extends"   ,":");              //
+            data=data.Replace("extends"    ,":");              //
+            data=data.Replace("Set"        ,"List");              //
+            data=data.Replace("implements" ,":");              //
+
             write_file(output_file,data);
         }
     }
 }
+
+//XmlRoot("PurchaseOrder", Namespace="http://www.cpandl.com",            IsNullable = false)]  

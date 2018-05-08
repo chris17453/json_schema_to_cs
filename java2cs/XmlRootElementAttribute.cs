@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace com.igi.domain.employee.v2
+namespace JavaDeps
 {
-	internal class XmlRootElementAttribute : Attribute
+	class XmlRootElementAttribute : Attribute
 	{
 		public string name { get; set; }
 	}
