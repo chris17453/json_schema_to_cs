@@ -9,6 +9,16 @@ namespace JavaDeps
             this.type=json_types;
         }
     }
+    public class JsonPropertyOrder:Attribute{
+        public JsonPropertyOrder(String[] order){
+        }
+    }
+    public class JsonProperty:Attribute{
+        public string name;
+        public bool required;
+        public JsonProperty(){
+        }
+    }
     public class JsonInclude: Attribute
     {
         public string type;
@@ -25,6 +35,12 @@ namespace JavaDeps
             this.type=type;
         }
     }
+    public class JsonIgnoreProperties:Attribute{
+        public bool ignoreUnknown;
+        public  JsonIgnoreProperties(){
+        }
+    }
+
     public class DomainEventSchema: Attribute {
 
         public string name;
@@ -32,5 +48,8 @@ namespace JavaDeps
         public DomainEventSchema(string name) {
             this.name=name;
         }
+    }
+    public class XmlRootElementAttribute : Attribute {
+        public string name { get; set; }
     }
 }

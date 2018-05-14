@@ -22,6 +22,8 @@ C:/Users/charles.watkins/Source/Repos/json_schema_to_cs/json_schema_to_cs/obj/De
 C:/Users/charles.watkins/Source/Repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.csproj.CoreCompileInputs.cache
 C:/Users/charles.watkins/Source/Repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.exe
 C:/Users/charles.watkins/Source/Repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.pdb
+/home/nd/repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.csprojResolveAssemblyReference.cache
+/home/nd/repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.csproj.CoreCompileInputs.cache
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/bin/Debug/template/File.liquid
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/bin/Debug/template/Enum.liquid
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/bin/Debug/template/Class.liquid
@@ -43,7 +45,5 @@ C:/Users/charles.watkins/Source/Repos/json_schema_to_cs/json_schema_to_cs/obj/De
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/bin/Debug/NJsonSchema.CodeGeneration.CSharp.xml
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/bin/Debug/Newtonsoft.Json.xml
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/bin/Debug/it/DotLiquid.resources.dll
-/home/nd/repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.csproj.CoreCompileInputs.cache
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.exe
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.pdb
-/home/nd/repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.csprojResolveAssemblyReference.cache

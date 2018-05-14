@@ -13,8 +13,13 @@ namespace java2cs
             fname = Directory.GetFiles(path, "*.java", SearchOption.AllDirectories).Select(x => Path.GetFullPath(x)).ToArray();
 
             foreach(string file in fname){
+            if(file.Contains("test")) continue;
                 string lines = File.ReadAllText(file, System.Text.Encoding.UTF8);
-                gen_cs(lines, file.Replace("java","cs"));
+                string dest_path=file.Replace("java","cs");
+                dest_path=dest_path.Replace("/",".");
+                dest_path=dest_path.Replace("src.main.cs.com.igi.domain.","");
+                dest_path=dest_path.Replace(".home.nd.repos2.","/home/nd/repos/igkafka/");
+                gen_cs(lines, dest_path);
             }
         }
         
@@ -184,6 +189,7 @@ namespace java2cs
             //if(null!=block) {
             data=data.Remove(block[1]-1,1);
             data=data.Insert(block[1]-1,"{\n"+
+                             "using System;\n"+
                              "using System.Xml;\n"+
                              "using System.Xml.Serialization;\n"+
                              "using System.Runtime.Serialization;\n"+
@@ -197,16 +203,22 @@ namespace java2cs
             data=size(data);
             data=_override(data);
             data=data.Replace("JsonInclude.Include.NON_EMPTY","\"NON_EMPTY\"");
-            data=data.Replace("final class","sealed class");        //correct class
-            data=data.Replace("final"      ,"readonly");        //correct properties/fields
-            data=data.Replace("String"     ,"string");              //
-            data=data.Replace("boolean"    ,"bool");              //
-            data=data.Replace("boolean"    ,"bool");              //
-            data=data.Replace("tostring"   ,"ToString");              //
-            data=data.Replace("extends"    ,":");              //
-            data=data.Replace("Set"        ,"List");              //
-            data=data.Replace("implements" ,":");              //
-
+            data=data.Replace("final class"  ,"sealed class");        //correct class
+            data=data.Replace("final"        ,"readonly");        //correct properties/fields
+            data=data.Replace("String"       ,"string");              //
+            data=data.Replace("Boolean"      ,"bool");              //
+            data=data.Replace("boolean"     ,"bool");              //
+            data=data.Replace("tostring"     ,"ToString");              //
+            data=data.Replace("readonly"     ,"");              //
+            data=data.Replace("extends"      ,":");              //
+            data=data.Replace("Set"          ,"List");              //
+            data=data.Replace("implements"   ,"");              //
+            data=data.Replace("Serializable" ,"");              //
+            data=data.Replace("LocalDate"    ,"DateTime");              //
+            data=data.Replace("Integer"      ,"int");              //
+            data=data.Replace("{]" ,"{");              //
+            data=data.Replace("  "," ");
+            data=data.Replace("\n\n","\n");
             write_file(output_file,data);
         }
     }

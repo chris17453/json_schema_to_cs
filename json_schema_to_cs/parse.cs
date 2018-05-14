@@ -6,6 +6,7 @@ using NJsonSchema.CodeGeneration.CSharp;
 using NJsonSchema.CodeGeneration;
 using NJsonSchema.Generation;
 using jsonschema_to_cs.code_name_generators;
+using System.Collections.Generic;
 
 namespace jsonschema_to_cs
 {
@@ -39,6 +40,8 @@ namespace jsonschema_to_cs
                 DirectoryInfo di = Directory.CreateDirectory(map.compiled_json_dir);
                 File.WriteAllText(map.compiled_json_path,schema_object.ToJson());
                 //generate c# class
+                //for(KeyValuePair<string schema_name,JsonSchema4 schema> schema in schema_object.Definitions){}
+                
                 var generator = new CSharpGenerator(schema_object,settings);             
                 var cs_file = generator.GenerateFile();
 
@@ -56,3 +59,5 @@ namespace jsonschema_to_cs
         }//end function     
     }
 }
+
+
