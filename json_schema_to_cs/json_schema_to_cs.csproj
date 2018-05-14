@@ -90,6 +90,7 @@
     <Compile Include="code-name-generators\jsonschema\jsonschema-name-generator.cs" />
     <Compile Include="dll_generator.cs" />
     <Compile Include="XML\helper.cs" />
+    <Compile Include="cs_parser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

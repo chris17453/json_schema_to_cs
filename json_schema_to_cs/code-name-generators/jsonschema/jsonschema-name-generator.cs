@@ -47,7 +47,6 @@ namespace jsonschema_to_cs.code_name_generators
             }
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
-                return "ff";
             }
             if(string.IsNullOrWhiteSpace(typeNameHint)) {
                 annon++;
