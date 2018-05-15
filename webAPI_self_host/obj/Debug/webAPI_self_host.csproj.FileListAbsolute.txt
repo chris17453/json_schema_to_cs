@@ -1,4 +1,0 @@
-/home/nd/repos/json_schema_to_cs/webAPI_self_host/obj/Debug/webAPI_self_host.csproj.CoreCompileInputs.cache
-/home/nd/repos/json_schema_to_cs/webAPI_self_host/obj/Debug/webAPI_self_host.csprojResolveAssemblyReference.cache
-C:\Users\charles.watkins\Source\Repos\json_schema_to_cs\webAPI_self_host\obj\Debug\webAPI_self_host.csprojResolveAssemblyReference.cache
-C:\Users\charles.watkins\Source\Repos\json_schema_to_cs\webAPI_self_host\obj\Debug\webAPI_self_host.csproj.CoreCompileInputs.cache

@@ -35,7 +35,6 @@
     <StartAction>Project</StartAction>
     <StartProgram>TERM=xterm</StartProgram>
     <StartArguments>-n IG.kafka -u http://schema.dev.box/list.txt -p /home/nd/repos/kafka-project</StartArguments>
-    <ExternalConsole>true</ExternalConsole>
     <EnvironmentVariables>
       <Variable name="TERM" value="XTERM" />
     </EnvironmentVariables>

@@ -70,8 +70,8 @@ namespace jsonschema_to_cs.XML{
                 }
                 assembly_generator.write_file(dest_xsd,o);
                 build_xml(ss,el_name,dest_xml);
-                //ExecuteCommand(string.Format("'/bin/xjc' -d '{0}' -p '{1}' '{2}'",dest_java,name_space,dest_xsd));        
-                    Process.Start("ls ","-?");
+                ExecuteCommand(string.Format("/bin/xjc -d {0} -p {1} {2}",dest_java,name_space,dest_xsd));        
+                //    Process.Start("ls ","-?");
             }//end memory stream
 
             }catch(Exception ex) {
