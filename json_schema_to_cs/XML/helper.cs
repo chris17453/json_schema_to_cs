@@ -5,8 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Microsoft.Xml.XMLGen;
 
 namespace jsonschema_to_cs.XML{
  
@@ -17,7 +19,10 @@ namespace jsonschema_to_cs.XML{
 
 
         }  
-        public static bool GetSchema(string source_library,string dest_xsd)
+
+
+
+        public static bool GetSchema(string source_library,string dest_xsd,string dest_xml)
         {
             if(!File.Exists(source_library)) {
                 Console.WriteLine("DLL File not found. -> "+source_library);
@@ -26,7 +31,7 @@ namespace jsonschema_to_cs.XML{
             var DLL = Assembly.LoadFile(source_library);
             try{
             int index=0;
-
+            string el_name="";
             XmlSchemas schemas = new XmlSchemas();
             foreach(Type type in DLL.GetExportedTypes()){
                     if(!type.BaseType.Name.Contains("event")) continue;
@@ -36,7 +41,11 @@ namespace jsonschema_to_cs.XML{
                     XmlReflectionImporter   importer = new XmlReflectionImporter(xao);
                     XmlSchemaExporter       exporter = new XmlSchemaExporter(schemas);
                     XmlTypeMapping          map = importer.ImportTypeMapping(type.UnderlyingSystemType,type.Namespace);
+                    el_name=type.Name;
                     exporter.ExportTypeMapping(map);
+
+
+
 //                }
                 index++;
                     break;
@@ -58,13 +67,38 @@ namespace jsonschema_to_cs.XML{
                     ms.Position = 0;
                     o+=new StreamReader(ms).ReadToEnd();
                 }
-                assembly_generator.write_file(dest_xsd,o);
+                    assembly_generator.write_file(dest_xsd,o);
+                    build_xml(ss,el_name,dest_xml);
+
+
             }//end memory stream
+
             }catch(Exception ex) {
                 Console.Write("Eh");
             }
              
             return true;
+        }
+
+
+        public static void build_xml(XmlSchemaSet schemas,string localName,string dest_xml){
+            
+            XmlQualifiedName qname = new XmlQualifiedName(localName);
+            string ns = string.Empty;
+            int max = 4;
+            int listLength = 5;
+
+            string filename =dest_xml;
+            string path     =Path.GetDirectoryName(filename);
+            Directory.CreateDirectory(path);
+
+
+            XmlTextWriter textWriter = new XmlTextWriter(dest_xml, null);
+            textWriter.Formatting = Formatting.Indented;
+            XmlSampleGenerator genr = new XmlSampleGenerator(schemas, qname);
+            if (max > 0) genr.MaxThreshold = max;
+            if (listLength > 0) genr.ListLength = listLength;
+            genr.WriteXml(textWriter);
         }
 
        public static void AttachXmlAttributes(XmlAttributeOverrides xao, Type t) {
@@ -171,6 +205,7 @@ namespace jsonschema_to_cs.XML{
                 if(null==schema) continue;
                 schemaSet.Add(schema);
             }
+
 
             schemaSet.Compile();
             var  x=schemaSet.Schemas();

@@ -35,7 +35,7 @@
     <StartAction>Project</StartAction>
     <StartProgram>TERM=xterm</StartProgram>
     <StartArguments>-n IG.kafka -u http://schema.dev.box/list.txt -p /home/nd/repos/kafka-project</StartArguments>
-    <ExternalConsole>false</ExternalConsole>
+    <ExternalConsole>true</ExternalConsole>
     <EnvironmentVariables>
       <Variable name="TERM" value="XTERM" />
     </EnvironmentVariables>
@@ -76,6 +76,9 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json.Schema">
+      <HintPath>..\packages\Newtonsoft.Json.Schema.3.0.10\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="code-name-generators\Template Class.cs" />
@@ -91,6 +94,13 @@
     <Compile Include="dll_generator.cs" />
     <Compile Include="XML\helper.cs" />
     <Compile Include="cs_parser.cs" />
+    <Compile Include="XML\Facets.cs" />
+    <Compile Include="XML\Generator.cs" />
+    <Compile Include="XML\InstanceAttribute.cs" />
+    <Compile Include="XML\InstanceElement.cs" />
+    <Compile Include="XML\InstanceGroup.cs" />
+    <Compile Include="XML\InstanceObject.cs" />
+    <Compile Include="XML\XmlSampleGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

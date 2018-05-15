@@ -12,6 +12,8 @@ namespace jsonschema_to_cs.code_name_generators{
             name=name.Replace("-","_");
             name=name.Replace(",","_");
             name=name.Replace("/","_");
+            name=name.Replace("&","_");
+            name=name.Replace(";","_");
             switch(name[0]){
                 case '0' : name="_"+name; break;
                 case '1' : name="_"+name; break;

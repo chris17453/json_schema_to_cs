@@ -56,7 +56,8 @@ namespace jsonschema_to_cs{
                     model.schema_map map=new model.schema_map(target_url,path,@namespace);
                     try{
                         if(!parse.parseapi(map)) Console.WriteLine("FAILED: "+target_url);
-                        XML.helper.GetSchema(map.dll_file,map.xsd_file);
+                        XML.helper.GetSchema(map.dll_file,map.xsd_file,map.xml_file);
+
 
                     } catch(Exception ex) {
                         Console.WriteLine("Processing failed: "+target_url);
@@ -66,7 +67,7 @@ namespace jsonschema_to_cs{
             }
 
 
-            XML.helper.combine_xsd(url_list,path,@namespace);
+          //  XML.helper.combine_xsd(url_list,path,@namespace);
             
                 Console.Write("Done.");
         }//end main

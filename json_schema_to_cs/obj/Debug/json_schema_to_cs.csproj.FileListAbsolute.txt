@@ -47,3 +47,5 @@ C:/Users/charles.watkins/Source/Repos/json_schema_to_cs/json_schema_to_cs/obj/De
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/bin/Debug/it/DotLiquid.resources.dll
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.exe
 /home/nd/repos/json_schema_to_cs/json_schema_to_cs/obj/Debug/json_schema_to_cs.pdb
+/home/nd/repos/json_schema_to_cs/json_schema_to_cs/bin/Debug/Newtonsoft.Json.Schema.dll
+/home/nd/repos/json_schema_to_cs/json_schema_to_cs/bin/Debug/Newtonsoft.Json.Schema.xml

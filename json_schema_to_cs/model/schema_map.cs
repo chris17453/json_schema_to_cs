@@ -23,6 +23,9 @@ namespace jsonschema_to_cs.model{
         public string xsd_dir             { get; set; }
         public string xsd_file            { get; set; }
 
+        public string xml_dir             { get; set; }
+        public string xml_file             { get; set; }
+
         public string @namespace          { get; set; }
         private static bool IsLinux {
             get {
@@ -49,12 +52,16 @@ namespace jsonschema_to_cs.model{
 
             code_dir="";
             string dll_base="";
+            int index=0;
             foreach(string path_part in tokens3) {
                 if(path_part.Length>3) {
                     if(!string.IsNullOrWhiteSpace(code_dir)) {
                         code_dir+=@"\"+path_part;
                         dll_base+="."+path_part;
                     } else {
+                        //index++;
+                        //if(index<2) continue;
+
                         code_dir+=path_part;
                         dll_base+=path_part;
                     }
@@ -78,11 +85,13 @@ namespace jsonschema_to_cs.model{
             this.compiled_json_dir      =String.Format(@"{0}{1}jsonschema{1}"    ,base_dir,seperator,base_code_dir);
             this.xsd_dir                =String.Format(@"{0}{1}xsd{1}"           ,base_dir,seperator,base_code_dir);
             this.dll_dir                =String.Format(@"{0}{1}dll{1}"           ,base_dir,seperator);
-            //files
+            this.xml_dir                =String.Format(@"{0}{1}xml{1}"           ,base_dir,seperator,base_code_dir);
+                        //files
             this.code_file              =String.Format(@"{0}{1}{2}.{3}.cs"            ,code_dir          ,seperator ,dll_base, base_name);
             this.web_api_file           =String.Format(@"{0}{1}{2}.{3}Controller.cs"  ,web_api_dir       ,seperator ,dll_base, base_name);
             this.compiled_json_path     =String.Format(@"{0}{1}{2}.{3}.json"          ,compiled_json_dir ,seperator ,dll_base, base_name);
             this.xsd_file               =String.Format(@"{0}{1}{2}.{3}.xsd"           ,xsd_dir           ,seperator ,dll_base, base_name);
+            this.xml_file               =String.Format(@"{0}{1}{2}.{3}.xml"           ,xml_dir           ,seperator ,dll_base, base_name);
             this.dll_file               =String.Format(@"{0}{1}{2}.{3}.dll"           ,dll_dir           ,seperator ,dll_base, base_name);
             if(event_name=="event") event_name="@event";
             
@@ -96,7 +105,7 @@ namespace jsonschema_to_cs.model{
                 }
             } 
             this.@namespace=string.Format("{0}.{1}.{2}",code_namespace,ns3,event_name);
-
+//            this.@namespace=code_namespace;
         }//end constructor
     }//end class
 }//end namespace
