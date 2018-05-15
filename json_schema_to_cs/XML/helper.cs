@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -22,7 +23,7 @@ namespace jsonschema_to_cs.XML{
 
 
 
-        public static bool GetSchema(string source_library,string dest_xsd,string dest_xml)
+        public static bool GetSchema(string source_library,string dest_xsd,string dest_xml,string dest_java,string name_space)
         {
             if(!File.Exists(source_library)) {
                 Console.WriteLine("DLL File not found. -> "+source_library);
@@ -67,10 +68,10 @@ namespace jsonschema_to_cs.XML{
                     ms.Position = 0;
                     o+=new StreamReader(ms).ReadToEnd();
                 }
-                    assembly_generator.write_file(dest_xsd,o);
-                    build_xml(ss,el_name,dest_xml);
-
-
+                assembly_generator.write_file(dest_xsd,o);
+                build_xml(ss,el_name,dest_xml);
+                //ExecuteCommand(string.Format("'/bin/xjc' -d '{0}' -p '{1}' '{2}'",dest_java,name_space,dest_xsd));        
+                    Process.Start("ls ","-?");
             }//end memory stream
 
             }catch(Exception ex) {
@@ -78,6 +79,20 @@ namespace jsonschema_to_cs.XML{
             }
              
             return true;
+        }
+
+        public static void ExecuteCommand(string command)
+        {
+            Process proc = new System.Diagnostics.Process ();
+            proc.StartInfo.FileName = "/bin/bash";
+            proc.StartInfo.Arguments = "-c \" " + command + " \"";
+            proc.StartInfo.UseShellExecute = false; 
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.Start ();
+
+            while (!proc.StandardOutput.EndOfStream) {
+                Console.WriteLine (proc.StandardOutput.ReadLine ());
+            }
         }
 
 

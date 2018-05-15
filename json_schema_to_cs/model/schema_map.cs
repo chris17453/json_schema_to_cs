@@ -24,7 +24,9 @@ namespace jsonschema_to_cs.model{
         public string xsd_file            { get; set; }
 
         public string xml_dir             { get; set; }
-        public string xml_file             { get; set; }
+        public string xml_file            { get; set; }
+
+        public string java_dir            { get; set; }
 
         public string @namespace          { get; set; }
         private static bool IsLinux {
@@ -86,7 +88,8 @@ namespace jsonschema_to_cs.model{
             this.xsd_dir                =String.Format(@"{0}{1}xsd{1}"           ,base_dir,seperator,base_code_dir);
             this.dll_dir                =String.Format(@"{0}{1}dll{1}"           ,base_dir,seperator);
             this.xml_dir                =String.Format(@"{0}{1}xml{1}"           ,base_dir,seperator,base_code_dir);
-                        //files
+            this.java_dir               =String.Format(@"{0}{1}java{1}"          ,base_dir,seperator,base_code_dir);
+                                    //files
             this.code_file              =String.Format(@"{0}{1}{2}.{3}.cs"            ,code_dir          ,seperator ,dll_base, base_name);
             this.web_api_file           =String.Format(@"{0}{1}{2}.{3}Controller.cs"  ,web_api_dir       ,seperator ,dll_base, base_name);
             this.compiled_json_path     =String.Format(@"{0}{1}{2}.{3}.json"          ,compiled_json_dir ,seperator ,dll_base, base_name);
